@@ -1,30 +1,19 @@
 <template name="app">
 	<core-scaffold id="scaffold">
-		<nav>
-			<core-toolbar><span>Single Page Polymer</span></core-toolbar>
-			<core-menu
-				selected="0">
-				
-				{{> sideNav}}
-
-			</core-menu>
-		</nav>
-		<core-toolbar tool flex>
-			<div flex>Application</div>
-			{{> loginButtons align="right"}}
-			<core-icon-button icon="refresh"></core-icon-button>
-			<core-icon-button icon="add"></core-icon-button>
-		</core-toolbar>
+		
+		{{> sideNav}}
+	
+		{{> topToolbar}}
 		<div layout horizontal center-center fit>
 			<core-animated-pages
 				selected="0" 
 				transitions="slide-from-right">
 				
-				<section hash="one"
+				<section id="one"
 					layout vertical center-center>
 					<div>one</div>
 				</section>
-				<section hash="two"
+				<section id="two"
 					layout vertical center-center>
 					<div>two</div>
 				</section>

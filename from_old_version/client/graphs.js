@@ -1,4 +1,4 @@
-Grapher.Graphs = {
+Experinode.Graphs = {
 	create: function(name, owner){
 		GraphsModel.insert({
 			name: name,

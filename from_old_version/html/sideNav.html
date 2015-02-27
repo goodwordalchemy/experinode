@@ -1,10 +1,35 @@
 <template name="sideNav">
-	<paper-item hash="page-hash" noink>
-		<core-icon icon="label-outline"></core-icon>
-		<a href="#one">one</a>
-	</paper-item>
-	<paper-item hash="page-hash" noink>
-		<core-icon icon="label-outline"></core-icon>
-		<a href="#two">two</a>
-	</paper-item>
+	<nav>
+		<core-toolbar>
+			<core-icon-button icon="add" id="new_graph">
+				<span style='vertical-align: -2px;'>Add graph</span>
+			</core-icon-button>
+		</core-toolbar>
+		<core-menu>
+			{{#if has_graphs}}
+				<paper-item hash="page-hash" noink>
+					<core-icon icon="label-outline"></core-icon>
+					{{#each graphs}}
+						{{> graph_row}}
+					{{/each}}
+				</paper-item>
+			{{else}}
+				<paper-item noink>
+					<p>No graphs to show</p>
+				</paper-item>
+			{{/if}}
+		</core-menu>
+	</nav>
+</template>
+
+<template name="graph_row">
+	<div class="title-group">
+		<span class="graph_title"> {{name}}</span>
+		<small>
+			<a href="#" class="open_graph">Open</a>
+			<a href="#" class="delete_graph">Delete</a>
+		</small>
+	</div><!--  End Title group -->
+	<!-- <paper-input-decorator label="Enter a New Title" 
+		class="new_title_field hidden"></paper-input-decorator> -->
 </template>

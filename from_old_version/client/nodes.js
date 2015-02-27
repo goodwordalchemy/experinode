@@ -1,4 +1,4 @@
-Grapher.Nodes = {
+Experinode.Nodes = {
 	create: function(title, color, position, graph, hypothesis, discussion, conclusion){
 		NodesModel.insert({
 			"title": title,
