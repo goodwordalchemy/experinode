@@ -74,14 +74,15 @@ if (Meteor.isClient) {
     }
 
     function mousemove() {
+      d3.event.stopPropagation();
       if (!mousedown_node) return;
 
       // update drag line
       drag_line
           .attr("x1", mousedown_node.x)
           .attr("y1", mousedown_node.y)
-          .attr("x2", d3.svg.mouse(this)[0])
-          .attr("y2", d3.svg.mouse(this)[1]);
+          .attr("x2", d3.mouse(this)[0])
+          .attr("y2", d3.mouse(this)[1]);
 
     }
 
@@ -151,7 +152,7 @@ if (Meteor.isClient) {
               else selected_link = mousedown_link; 
               selected_node = null; 
               redraw(); 
-            })
+            });
 
       link.exit().remove();
 
@@ -166,7 +167,9 @@ if (Meteor.isClient) {
           .on("mousedown", 
             function(d) { 
               // disable zoom
-              vis.call(d3.behavior.zoom().on("zoom"), null);
+              console.log(d3.event);//debug
+              d3.event.stopPropagation();
+              vis.call(d3.behavior.zoom().on("zoom", null));
 
               mousedown_node = d;
               if (mousedown_node == selected_node) selected_node = null;
@@ -185,6 +188,7 @@ if (Meteor.isClient) {
             })
           .on("mousedrag",
             function(d) {
+              d3.event.sourceEvent.stopPropagation();
               // redraw();
             })
           .on("mouseup", 
@@ -222,6 +226,7 @@ if (Meteor.isClient) {
 
       if (d3.event) {
         // prevent browser's default behavior
+        // d3.event.sourceEvent.stopPropagation();
         d3.event.preventDefault();
       }
 
