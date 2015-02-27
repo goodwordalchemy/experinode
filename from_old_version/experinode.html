@@ -15,41 +15,15 @@
 </head>
 
 <body>
-	{{> layout}}
+	{{> experinode}}
 </body>
 
-<template name="layout">
+<template name="experinode">
+	{{#if logged_in}}
+		{{> app}}
+	{{else}}
+		{{> home}}
+	{{/if}}
 	
-		<core-scaffold id="scaffold">
-			<nav>
-				<core-toolbar><span>Single Page Polymer</span></core-toolbar>
-				<core-menu valueattr="hash" 
-				selected="0">
-					
-						<paper-item hash="page-hash" noink>
-							<core-icon icon="label-outline"></core-icon>
-							<a href="#page-hash">page-name</a>
-						</paper-item>
-
-				</core-menu>
-			</nav>
-			<core-toolbar tool flex>
-				<div flex>Application</div>
-				<core-icon-button icon="refresh"></core-icon-button>
-				<core-icon-button icon="add"></core-icon-button>
-			</core-toolbar>
-			<div layout horizontal center-center fit>
-				<core-animated-pages valueattr="hash"
-					selected="0" 
-					transitions="slide-from-right">
-					
-						<section hash="page-hash"
-							layout vertical center-center>
-							<div>page name</div>
-						</section>
-
-				</core-animated-pages>
-			</div>
-		</core-scaffold>
 
 </template>
