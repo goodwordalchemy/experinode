@@ -1,0 +1,55 @@
+<head>
+	<script src="/bower_components/platform/platform.js"></script>
+
+	 <!-- html imports -->
+    <link rel="import" href="/bower_components/core-scaffold/core-scaffold.html">
+    <link rel="import" href="/bower_components/core-toolbar/core-toolbar.html">
+    <link rel="import" href="/bower_components/core-menu/core-menu.html">
+    <link rel="import" href="/bower_components/core-icon-button/core-icon-button.html">
+    <link rel="import" href="/bower_components/core-item/core-item.html">
+    <link rel="import" href="/bower_components/paper-icon-button/paper-icon-button.html">
+    <link rel="import" href="/bower_components/paper-item/paper-item.html">
+    <link rel="import" href="/bower_components/core-animated-pages/core-animated-pages.html">
+    <link rel="import" href="/bower_components/core-animated-pages/transitions/slide-from-right.html">
+
+</head>
+
+<body>
+	{{> layout}}
+</body>
+
+<template name="layout">
+	
+		<core-scaffold id="scaffold">
+			<nav>
+				<core-toolbar><span>Single Page Polymer</span></core-toolbar>
+				<core-menu valueattr="hash" 
+				selected="0">
+					
+						<paper-item hash="page-hash" noink>
+							<core-icon icon="label-outline"></core-icon>
+							<a href="#page-hash">page-name</a>
+						</paper-item>
+
+				</core-menu>
+			</nav>
+			<core-toolbar tool flex>
+				<div flex>Application</div>
+				<core-icon-button icon="refresh"></core-icon-button>
+				<core-icon-button icon="add"></core-icon-button>
+			</core-toolbar>
+			<div layout horizontal center-center fit>
+				<core-animated-pages valueattr="hash"
+					selected="0" 
+					transitions="slide-from-right">
+					
+						<section hash="page-hash"
+							layout vertical center-center>
+							<div>page name</div>
+						</section>
+
+				</core-animated-pages>
+			</div>
+		</core-scaffold>
+
+</template>
