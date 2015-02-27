@@ -1,13 +1,10 @@
 Experinode.Nodes = {
-	create: function(title, color, position, graph, hypothesis, discussion, conclusion){
+	create: function(title, color, position, graph){
 		NodesModel.insert({
-			"title": title,
+			"text": title,
 			"color": color,
 			"position": position,
-			"graph": graph,
-			"hypothesis": hypothesis,
-			"discussion": discussion,
-			"conclusion": conclusion
+			"graph": graph
 		});
 	},
 	delete: function(node){
@@ -42,6 +39,5 @@ Experinode.Nodes = {
 		NodesModel.update({"_id": node}, {
 			$set: {"conclusion": new_conclusion}
 		});
-	}
-
+	},
 };

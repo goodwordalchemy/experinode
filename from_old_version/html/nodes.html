@@ -1,0 +1,54 @@
+<template name="nodes_page">
+	{{> node_section}}
+	{{> modal}}
+	<div id="header">
+		<div id="login_bar">
+			{{> loginButtons align="right"}}
+		</div>
+		<h3 id="go_back">Experinode</h3>
+		<span class="graph_name"> - {{graph_name}}</span>
+	</div>
+</template>
+
+<template name="node_section">
+	<div id="node_area">
+		{{#each nodes}}
+			{{> node}}
+		{{/each}}
+		<svg id="relationships">
+			<line id="mouse_line" />
+		</svg>
+	</div>
+</template>
+
+<template name="node">
+	<div id="{{_id}}" class="node_border" 
+		style="top:{{position.y}}px;
+		       left: {{position.x}}px;">
+		<div class="node {{color}} {{selected}}">
+			<span class="node_text">{{text}}</span>
+			<span class="remove_node">x</span>
+		</div>
+	</div>
+</template>
+
+<template name="modal">
+	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+	        <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+	      </div>
+	      <div class="modal-body">
+	        ...
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+	        <button type="button" class="btn btn-primary">Save changes</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+
+</template>
