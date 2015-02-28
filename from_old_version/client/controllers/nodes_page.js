@@ -11,6 +11,7 @@ Template.nodes_page.events({
 	},
 	'click .remove_node': function(){
 		Experinode.Nodes.delete(this._id);
+		Session.set("started_drag");
 		hide_drag_line();
 	},
 	'dblclick .node': function(){
@@ -37,7 +38,6 @@ Template.nodes_page.events({
 		if(Session.get("started_drag") && Session.get("node_selected")){
 			var node_a = Session.get('started_drag')._id;
 			var node_b = create_node(e)._id;
-			console.log(node_b);
 			Experinode.Relationships.create(node_a, node_b);
 			render_lines();
 		}
@@ -62,7 +62,7 @@ function create_node(e){
 function toggle_select_node(){
 	if(Session.equals("node_selected", this._id)){
 		Session.set("node_selected");
-		//Session.set("started_drag");
+		Session.set("started_drag");
 		hide_drag_line();
 
 	}
