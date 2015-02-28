@@ -118,7 +118,7 @@ h4{
 	cursor: pointer;
 	position: absolute;
 }
-.node_border:hover {
+.node_border_node_selected {
 	background: rgba(0,0,0,0.4);
 }
 .node_selected{

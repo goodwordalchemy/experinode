@@ -22,7 +22,7 @@
 </template>
 
 <template name="node">
-	<div id="{{_id}}" class="node_border" 
+	<div id="{{_id}}" class="node_border node_border_{{selected}}" 
 		style="top:{{position.y}}px;
 		       left: {{position.x}}px;">
 		<div class="node {{color}} {{selected}}">

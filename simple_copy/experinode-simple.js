@@ -74,7 +74,7 @@ if (Meteor.isClient) {
     }
 
     function mousemove() {
-      d3.event.stopPropagation();
+      //d3.event.stopPropagation();
       if (!mousedown_node) return;
 
       // update drag line

@@ -1,11 +1,12 @@
 Experinode.Nodes = {
 	create: function(title, color, position, graph){
-		NodesModel.insert({
+		var node = NodesModel.insert({
 			"text": title,
 			"color": color,
 			"position": position,
 			"graph": graph
 		});
+		return node;
 	},
 	delete: function(node){
 		NodesModel.remove({"_id": node});
