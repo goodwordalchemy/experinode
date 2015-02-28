@@ -23,12 +23,15 @@ Template.nodes_page.events({
 	'click .node': toggle_select_node,
 	'mousemove .node': drag_node,
 	'mouseover .node_border': function(e){
-		if(Session.get("started_drag")){
-			$(this).addClass('node_border_node_selected');
+		if(Session.get("started_drag") &&
+				$(e.target).is(".node_border")){
+			$(e.target).addClass('node_border_node_selected');
 		}
 	},
 	'mouseout .node_border': function(e){
-		$(this).removeClass('node_border_node_selected');
+		if(Session.equals('node_selected', this._id)){return;}
+		if($(e.target).is(".node_border"))
+			$(e.target).removeClass('node_border_node_selected');
 	},
 	'click #relationships': function(e){
 		if(Session.get("started_drag")){
@@ -64,7 +67,7 @@ function toggle_select_node(){
 	else {
 		Session.set("node_selected", this._id);
 		$("#" + this._id).draggable( "disable");
-		hide_mouse_line();
+		hide_drag_line();
 	}
 }
 
@@ -157,8 +160,8 @@ Template.node.helpers({
 });
 
 function add_relationship(e){
-	if($(e.target).hasClass("node_border") && 
-			Session.equals("node_selected", this._id)){
+	if($(e.target).hasClass("node_border") /*&& 
+			Session.equals("node_selected", this._id)*/){
 		var node_a = Session.get("started_drag");
 		if(!node_a){
 			Session.set("started_drag", this);
