@@ -34,7 +34,7 @@ Template.nodes_page.events({
 			$(e.target).removeClass('node_border_node_selected');
 	},
 	'click #relationships': function(e){
-		if(Session.get("started_drag")){
+		if(Session.get("started_drag") && Session.get("node_selected")){
 			var node_a = Session.get('started_drag')._id;
 			var node_b = create_node(e)._id;
 			console.log(node_b);
@@ -62,6 +62,8 @@ function create_node(e){
 function toggle_select_node(){
 	if(Session.equals("node_selected", this._id)){
 		Session.set("node_selected");
+		//Session.set("started_drag");
+		hide_drag_line();
 
 	}
 	else {
@@ -167,23 +169,32 @@ function add_relationship(e){
 			Session.set("started_drag", this);
 		}
 		else {
-			Experinode.Relationships.create(node_a._id, this._id);
-			Session.set("started_drag");
-			hide_drag_line();
+			var node_selected = Session.get("node_selected");
+			if(node_a._id == node_selected){
+				console.log("creating relationship");//debug
+				Experinode.Relationships.create(node_a._id, this._id);
+				Session.set("started_drag");
+				hide_drag_line();
 
-			render_lines();
+				render_lines();
+			}
 		}
 
 	}
 }
 function draw_line(e){
-	var node = Session.get("started_drag");
-	if(node){
-		var n = get_node_center($("#" + node._id));
-		setup_line(d3.select("#mouse_line"), n, {
-			x: e.pageX,
-			y: e.pageY
-		});
+	var node_selected = Session.get("node_selected");
+	if(node_selected){
+
+		var node = Session.get("started_drag");
+		
+		if(node && node._id == node_selected){
+			var n = get_node_center($("#" + node._id));
+			setup_line(d3.select("#mouse_line"), n, {
+				x: e.pageX,
+				y: e.pageY
+			});
+		}
 	}
 }
 function hide_drag_line(){
