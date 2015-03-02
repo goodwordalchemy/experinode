@@ -167,23 +167,27 @@ Template.node.helpers({
 
 function add_relationship(e){
 	var node_selected = Session.get("node_selected");
-	if (node_selected !== e.target.id){ return; }
+
 
 	if($(e.target).hasClass("node_border")){
 		var node_a = Session.get("started_drag");
 		if(!node_a){
+			if(node_selected !== e.target.id) return; //prevents drawing drag line before node is selected
 			Session.set("started_drag", this);
 		}
 		else {
 			if(node_a._id == node_selected){
+
 				if(node_selected != this._id){
 					console.log("creating relationship");//debug
 					Experinode.Relationships.create(node_a._id, this._id);
+					render_lines();
 				}
+
 				Session.set("started_drag");
 				hide_drag_line();
 
-				render_lines();
+				
 			}
 		}
 
