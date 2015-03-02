@@ -1,7 +1,7 @@
 Experinode.Nodes = {
 	create: function(title, color, position, graph){
 		var node = NodesModel.insert({
-			"text": title,
+			"title": title,
 			"color": color,
 			"position": position,
 			"graph": graph

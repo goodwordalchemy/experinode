@@ -17,8 +17,8 @@ Template.nodes_page.events({
 	},
 	'click .remove_node': remove_node,
 	'dblclick .node': function(){
-		$('#myModal').modal('show');
 		Session.set("node_selected", this._id);
+		show_modal();
 	},
 	'click #go_back': function(){
 		Session.set("current_graph");
@@ -221,17 +221,42 @@ function delete_relationship(e){
 }
 
 function remove_node(){
-		var relationships = RelationshipsModel.find({
-			$or: [
-				{"node_a": { $in: [this._id] }},
-				{"node_b": { $in: [this._id] }}
-			]
-		}).fetch();
-		relationships.forEach(function(rel){
-			console.log(rel._id);
-			Experinode.Relationships.delete(rel._id);
-		});
-		Experinode.Nodes.delete(this._id);
-		Session.set("started_drag");
-		hide_drag_line();
-	}
+	var relationships = RelationshipsModel.find({
+		$or: [
+			{"node_a": { $in: [this._id] }},
+			{"node_b": { $in: [this._id] }}
+		]
+	}).fetch();
+	relationships.forEach(function(rel){
+		console.log(rel._id);
+		Experinode.Relationships.delete(rel._id);
+	});
+	Experinode.Nodes.delete(this._id);
+	Session.set("started_drag");
+	hide_drag_line();
+}
+function renderTmp(template, data) {
+    var node = document.createElement("div");
+    document.body.appendChild(node);
+    UI.renderWithData(template, data, node);
+    return node;
+}
+function show_modal(){
+	bootbox.dialog({
+        title: Session.get("node_selected").title,
+        message: renderTmp(Template.modal),
+        buttons: {
+            success: {
+                label: "Save",
+                className: "btn-success",
+                callback: function () {
+                    var name = $('#name').val();
+                    var answer = $("input[name='awesomeness']:checked").val();
+                    Example.show("Hello " + name + ". You've chosen <b>" + answer + "</b>");
+                }
+            }
+        }
+    });
+
+}
+
