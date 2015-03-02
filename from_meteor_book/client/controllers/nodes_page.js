@@ -166,7 +166,8 @@ Template.node.helpers({
 });
 
 function add_relationship(e){
-	if (!Session.get("node_selected")){ return; }
+	var node_selected = Session.get("node_selected");
+	if (node_selected !== e.target.id){ return; }
 
 	if($(e.target).hasClass("node_border")){
 		var node_a = Session.get("started_drag");
@@ -174,7 +175,6 @@ function add_relationship(e){
 			Session.set("started_drag", this);
 		}
 		else {
-			var node_selected = Session.get("node_selected");
 			if(node_a._id == node_selected){
 				if(node_selected != this._id){
 					console.log("creating relationship");//debug
