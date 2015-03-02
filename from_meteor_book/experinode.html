@@ -1,0 +1,19 @@
+<head>
+  <title>Experinode</title>
+</head>
+
+<body>
+  {{> experinode}}
+</body>
+
+<template name="experinode">
+	{{#if logged_in}}
+		{{#if graph_selected}}
+			{{> nodes_page}}
+		{{else}}
+			{{> graphs_page}}
+		{{/if}}
+	{{else}}
+		{{> home_page}}
+	{{/if}}
+</template>
