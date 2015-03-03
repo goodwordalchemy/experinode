@@ -1,7 +1,10 @@
 Template.modal.rendered = function () {
 	Tracker.autorun(function(){
 		highlight_color_box();
+		load_infos();
 	});
+
+
 };
 function highlight_color_box(){
 	$('.color_box').removeClass("color_box_selected");
@@ -9,6 +12,14 @@ function highlight_color_box(){
 	if(node_id){
 		var node = NodesModel.findOne({"_id": node_id});
 		$("." + node.color).addClass("color_box_selected");
+	}
+}
+function load_infos(){
+	var node_selected = Session.get("node_selected");
+	if(node_selected){
+		Meteor.subscribe('Infos', node_selected, function(result){
+			console.log("result from load infos sub", result);
+		});
 	}
 }
 
@@ -49,6 +60,7 @@ function change_node_title(){
 	$("#node-title").addClass("hidden");
 	$('#node-title-input').removeClass("hidden");
 	$('#node-title-input').focus();
+
 	
 }
 function commit_node_title(){
@@ -79,9 +91,11 @@ function commit_info_title(){
 	
 	if(new_title && new_title.length > 0){
 		var title_id = Session.get("current_title_id");
-		Session.set("current_title_id");
-		console.log("title", title_id);
-		Experinode.Infos.change_title(title_id, new_title);
+		if(title_id){
+			Session.set("current_title_id");
+			console.log("title", title_id);
+			Experinode.Infos.change_title(title_id, new_title);
+		}
 	}
 	$(".info-heading").removeClass("hidden");
 	$(".info-title-input").addClass("hidden");

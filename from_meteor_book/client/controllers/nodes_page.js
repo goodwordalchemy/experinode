@@ -76,21 +76,25 @@ function toggle_select_node(){
 	}
 	else {
 		Session.set("node_selected", this._id);
-		//$("#" + this._id).draggable( "disable");
 		hide_drag_line();
 	}
 }
 
 function drag_node(){
-	// selecting node ensure that new nodes can be dragged from border
-	// if(!Session.equals("node_selected", this._id)){
-
-	// 	$("#" + this._id).draggable("enable");
-		
-	// } else {
-		
-	// 	$("#" + this._id).draggable( "disable");
-	// }
+	var height = $(window).height() - 10;
+	var width = $(window).width() - 10;
+	$(".node_border").draggable({
+		handle: ".node_text",
+		containement: [10, 190, width, height],
+		stop: function(e, u){
+			var node_id = e.target.id;
+			Experinode.Nodes.move(node_id, {
+				x: u.offset.left,
+				y: u.offset.top
+			});
+		},
+		drag: node_moved
+	});	
 }
 
 function node_moved(){
@@ -137,20 +141,6 @@ Template.node_section.rendered = function(){
 		for (var k in nodes){
 			node_ids.push(nodes[k]._id);
 		}
-		var height = $(window).height() - 10;
-		var width = $(window).width() - 10;
-		$(".node_border").draggable({
-			handle: ".node_text",
-			containement: [10, 190, width, height],
-			stop: function(e, u){
-				var node_id = e.target.id;
-				Experinode.Nodes.move(node_id, {
-					x: u.offset.left,
-					y: u.offset.top
-				});
-			},
-			drag: node_moved
-		});	
 
 		render_lines();
 	});
@@ -160,6 +150,20 @@ Template.node_section.helpers({
 		return NodesModel.find({});
 	}
 });
+
+Template.node_section.rendered = function(){
+	var nodes = NodesModel.find({}).fetch();
+	var node_ids = [];
+	for (var k in nodes){
+		node_ids.push(nodes[k]._id);
+	}
+
+	Meteor.subscribe("Relationships", node_ids, function(){
+		console.log("subscription from relationships...");
+		render_lines();
+	});
+	
+};
 
 Template.node.helpers({
 	selected: function () {
@@ -264,9 +268,7 @@ function show_modal(){
                 label: "Save",
                 className: "btn-success",
                 callback: function () {
-                    var name = $('#name').val();
-                    var answer = $("input[name='awesomeness']:checked").val();
-                    Example.show("Hello " + name + ". You've chosen <b>" + answer + "</b>");
+                    
                 }
             }
         }
