@@ -3,6 +3,7 @@ Template.modal.rendered = function () {
 		highlight_color_box();
 		load_infos();
 	});
+	$("#sortable").sortable();
 
 
 };
