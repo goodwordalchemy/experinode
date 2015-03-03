@@ -5,9 +5,6 @@ Experinode.Nodes = {
 			"color": color,
 			"position": position,
 			"graph": graph,
-			"hypothesis": "enter a Hypothesis",
-			"discussion": "enter a discussion",
-			"conclusion": "enter a conclusion"
 		});
 		return node;
 	},

@@ -102,7 +102,15 @@ h4{
 	width: 20px;
 	height: 20px;
 	display: inline-block;
-	vertical-align: -5px;
+}
+.color_box_selected{
+	border: 3px solid black;
+}
+.color_box-group{
+	padding-top:20px;
+}
+#node-title-input{
+	/*vertical-align:;*/
 }
 #node_area{
 	position: absolute;

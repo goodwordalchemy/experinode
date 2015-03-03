@@ -14,6 +14,9 @@ Template.nodes_page.events({
 			y: 250
 		},
 		graph._id);
+
+		var infos = Experinode.Infos.create("title", "Insert some data...", node);
+		console.log(infos);//debug
 	},
 	'click .remove_node': remove_node,
 	'dblclick .node': function(){
@@ -54,12 +57,14 @@ Template.nodes_page.events({
 });
 function create_node(e){
 	var graph = Session.get("current_graph");
-	var node_id = Experinode.Nodes.create("New Node", "blue", {
+	var node = Experinode.Nodes.create("New Node", "blue", {
 		x: e.pageX - $("#node_area").offset().left - 50,
 		y: e.pageY - $("#node_area").offset().top - 30
 	},
 	graph._id);
-	return node_id;
+	Experinode.Infos.create("title", "Insert some data...", node);
+	console.log(node);
+	return node;
 }
 
 function toggle_select_node(){
@@ -232,9 +237,14 @@ function remove_node(){
 		]
 	}).fetch();
 	relationships.forEach(function(rel){
-		console.log(rel._id);
 		Experinode.Relationships.delete(rel._id);
 	});
+
+	var infos = InfosModel.find({"node": this._id});
+	infos.forEach(function(info){
+		Experinode.Infos.delete(info._id);
+	});
+
 	Experinode.Nodes.delete(this._id);
 	Session.set("started_drag");
 	hide_drag_line();
