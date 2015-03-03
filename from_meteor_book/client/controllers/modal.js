@@ -87,13 +87,11 @@ function change_info_title(){
 }
 function commit_info_title(){
 	var new_title = $("#info-title-input-" + this._id).val();
-	console.log("new_title",new_title);
 	
 	if(new_title && new_title.length > 0){
 		var title_id = Session.get("current_title_id");
 		if(title_id){
 			Session.set("current_title_id");
-			console.log("title", title_id);
 			Experinode.Infos.change_title(title_id, new_title);
 		}
 	}
