@@ -40,13 +40,15 @@ Template.modal.events({
 
 function change_node_title(){
 	$("#node-title").addClass("hidden");
-	$('#node-title-input-group').removeClass("hidden");
+	$('#node-title-input').removeClass("hidden");
 }
 function commit_node_title(){
 	var new_title = $('#node-title-input').val();
-	Experinode.Nodes.change_title(this._id, new_title);
+	if(new_title.length > 0){
+		Experinode.Nodes.change_title(this._id, new_title);
+	}
 	$("#node-title").removeClass("hidden");
-	$('#node-title-input-group').addClass("hidden");
+	$('#node-title-input').addClass("hidden");
 }
 function color_node(e) {
 	var color = $(e.target).attr("color");
