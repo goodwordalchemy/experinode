@@ -41,6 +41,7 @@ Template.modal.events({
 });
 
 function change_node_title(){
+	blur_all();
 	$("#node-title").addClass("hidden");
 	$('#node-title-input').removeClass("hidden");
 }
@@ -60,6 +61,7 @@ function color_node(e) {
 	}
 }
 function change_info_title(){
+	blur_all();
 	$("#info-title-" + this._id).addClass("hidden");
 	$('#info-title-input-'+ this._id).removeClass("hidden");
 }
@@ -73,6 +75,7 @@ function commit_info_title(){
 	$input.addClass("hidden");
 }
 function change_info_content(){
+	blur_all();
 	$("#info-data-" + this._id).addClass("hidden");
 	$('#info-data-input-'+ this._id).removeClass("hidden");
 }
@@ -86,9 +89,20 @@ function commit_info_content(){
 	$input.addClass("hidden");
 }
 function create_new_info(){
+	blur_all();
 	Experinode.Infos.create(
 		"Double Click to change Title",
 		"Double Click to add some data",
 		this._id
 	);
+}
+
+function blur_all(){
+	var $input = $('textarea');
+	console.log("inputs", $input);
+	$input.each(function(){
+		$(this).trigger('blur');
+	});
+	$(this).focus();
+	
 }
