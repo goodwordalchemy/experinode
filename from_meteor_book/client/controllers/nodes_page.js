@@ -76,21 +76,21 @@ function toggle_select_node(){
 	}
 	else {
 		Session.set("node_selected", this._id);
-		$("#" + this._id).draggable( "disable");
+		//$("#" + this._id).draggable( "disable");
 		hide_drag_line();
 	}
 }
 
 function drag_node(){
 	// selecting node ensure that new nodes can be dragged from border
-	if(!Session.equals("node_selected", this._id)){
+	// if(!Session.equals("node_selected", this._id)){
 
-		$("#" + this._id).draggable("enable");
+	// 	$("#" + this._id).draggable("enable");
 		
-	} else {
+	// } else {
 		
-		$("#" + this._id).draggable( "disable");
-	}
+	// 	$("#" + this._id).draggable( "disable");
+	// }
 }
 
 function node_moved(){

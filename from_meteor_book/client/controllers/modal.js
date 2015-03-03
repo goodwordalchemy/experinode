@@ -25,27 +25,34 @@ Template.modal.helpers({
 });
 Template.modal.events({
 	'dblclick #node-title': change_node_title,
-	'blur #node-title-input': commit_node_title,
+	'focusout #node-title-input': commit_node_title,
 	'keydown #node-title-input': function(e){
 		if (e.which == 13) commit_node_title();
 	},
 	'click .color_box': color_node,
-	'dblclick .panel-heading': change_info_title,
+	'dblclick .info-heading': change_info_title,
 	'blur .info-title-input': commit_info_title,
 	'keydown .info-title-input': function(e){
-		if (e.which == 13) commit_info_title();
+		if (e.which == 13) {
+			commit_info_title();
+		}
 	},
 	'click .panel-body': change_info_content,
 	'blur .info-data-input': commit_info_content,
-	'click #new_info': create_new_info
+	'click #new_info': create_new_info,
+	'click .remove_info': remove_info
 });
 
 function change_node_title(){
+
 	blur_all();
 	$("#node-title").addClass("hidden");
 	$('#node-title-input').removeClass("hidden");
+	$('#node-title-input').focus();
+	
 }
 function commit_node_title(){
+
 	var new_title = $('#node-title-input').val();
 	if(new_title && new_title.length > 0){
 		Experinode.Nodes.change_title(this._id, new_title);
@@ -64,20 +71,26 @@ function change_info_title(){
 	blur_all();
 	$("#info-title-" + this._id).addClass("hidden");
 	$('#info-title-input-'+ this._id).removeClass("hidden");
+	$('#info-title-input-'+ this._id).focus();
+	Session.set("current_title_id", this._id);
 }
 function commit_info_title(){
-	var $input = $("#info-title-input-" + this._id);
-	var new_title = $input.val();
+	var new_title = $(".info-title-input").val();
+	
 	if(new_title && new_title.length > 0){
-		Experinode.Infos.change_title(this._id, new_title);
+		var title_id = Session.get("current_title_id");
+		Session.set("current_title_id");
+		console.log("title", title_id);
+		Experinode.Infos.change_title(title_id, new_title);
 	}
-	$("#info-title-" + this._id).removeClass("hidden");
-	$input.addClass("hidden");
+	$(".info-heading").removeClass("hidden");
+	$(".info-title-input").addClass("hidden");
 }
 function change_info_content(){
 	blur_all();
 	$("#info-data-" + this._id).addClass("hidden");
 	$('#info-data-input-'+ this._id).removeClass("hidden");
+	$('#info-data-input-'+ this._id).focus();
 }
 function commit_info_content(){
 	var $input = $("#info-data-input-" + this._id);
@@ -98,11 +111,13 @@ function create_new_info(){
 }
 
 function blur_all(){
-	var $input = $('textarea');
-	console.log("inputs", $input);
+	var $input = $('input, textarea');
 	$input.each(function(){
 		$(this).trigger('blur');
 	});
 	$(this).focus();
 	
+}
+function remove_info(){
+	Experinode.Infos.delete(this._id);
 }
