@@ -141,9 +141,11 @@ Template.node_section.rendered = function(){
 			node_ids.push(nodes[k]._id);
 		}
 
-		Meteor.subscribe("Relationships", node_ids, function(){
-			render_lines();
-		});
+		if(node_ids.length > 0) {
+			Meteor.subscribe("Relationships", node_ids, function(){
+				render_lines();
+			});
+		}
 
 		render_lines();
 	});
