@@ -11,15 +11,14 @@ function highlight_color_box(){
 	var node_id = Session.get("node_selected");
 	if(node_id){
 		var node = NodesModel.findOne({"_id": node_id});
-		$("." + node.color).addClass("color_box_selected");
+		if(node && node.hasOwnProperty("color"))
+			$("." + node.color).addClass("color_box_selected");
 	}
 }
 function load_infos(){
 	var node_selected = Session.get("node_selected");
 	if(node_selected){
-		Meteor.subscribe('Infos', node_selected, function(result){
-			console.log("result from load infos sub", result);
-		});
+		Meteor.subscribe('Infos', node_selected);
 	}
 }
 

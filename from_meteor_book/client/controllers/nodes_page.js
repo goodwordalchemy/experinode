@@ -16,7 +16,7 @@ Template.nodes_page.events({
 		graph._id);
 
 		var infos = Experinode.Infos.create("New Info Title", "Insert some data...", node);
-		console.log(infos);//debug
+		
 	},
 	'click .remove_node': remove_node,
 	'dblclick .node': function(){
@@ -63,7 +63,6 @@ function create_node(e){
 	},
 	graph._id);
 	Experinode.Infos.create("title", "Insert some data...", node);
-	console.log(node);
 	return node;
 }
 
@@ -142,6 +141,10 @@ Template.node_section.rendered = function(){
 			node_ids.push(nodes[k]._id);
 		}
 
+		Meteor.subscribe("Relationships", node_ids, function(){
+			render_lines();
+		});
+
 		render_lines();
 	});
 };
@@ -151,19 +154,6 @@ Template.node_section.helpers({
 	}
 });
 
-Template.node_section.rendered = function(){
-	var nodes = NodesModel.find({}).fetch();
-	var node_ids = [];
-	for (var k in nodes){
-		node_ids.push(nodes[k]._id);
-	}
-
-	Meteor.subscribe("Relationships", node_ids, function(){
-		console.log("subscription from relationships...");
-		render_lines();
-	});
-	
-};
 
 Template.node.helpers({
 	selected: function () {
