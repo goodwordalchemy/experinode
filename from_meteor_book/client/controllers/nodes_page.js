@@ -15,7 +15,7 @@ Template.nodes_page.events({
 		},
 		graph._id);
 
-		var infos = Experinode.Infos.create("title", "Insert some data...", node);
+		var infos = Experinode.Infos.create("New Info Title", "Insert some data...", node);
 		console.log(infos);//debug
 	},
 	'click .remove_node': remove_node,

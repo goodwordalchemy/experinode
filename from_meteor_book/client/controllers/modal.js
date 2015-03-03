@@ -17,6 +17,11 @@ Template.modal.helpers({
 		var node = Session.get("node_selected");
 		return NodesModel.findOne({"_id": node});
 	},
+	infos: function(){
+		var node = Session.get("node_selected");
+		return InfosModel.find({"node": node}).fetch();
+
+	}
 });
 Template.modal.events({
 	'dblclick #node-title': change_node_title,
@@ -25,8 +30,8 @@ Template.modal.events({
 		if (e.which == 13) commit_node_title();
 	},
 	'click .color_box': color_node,
-	// 'dblclick .panel-title': change_info_title,
-	// 'focusout .panel-title-input': commit_info_title,
+	'dblclick .panel-heading': change_info_title,
+	//'focusout .panel-title-input': commit_info_title,
 	// 'keydown .panel-title-input': function(e){
 	// 	if (e.which == 13) commit_info_title();
 	// },
@@ -49,5 +54,8 @@ function color_node(e) {
 	if (color && node){
 		Experinode.Nodes.change_color(node, color);
 	}
-
+}
+function change_info_title(){
+	$(".panel-title").addClass("hidden");
+	$('#info-title-input').removeClass("hidden");
 }
